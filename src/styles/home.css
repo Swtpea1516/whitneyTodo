@@ -1,0 +1,46 @@
+
+body {
+    background-color: aliceblue;
+    margin-top: 100px;
+    padding: 3px;
+}
+
+ul li{
+     border: 1px solid  gray;
+    list-style: none;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    width: 400px;
+    height: 60px;
+    margin-left: 450px;
+}
+
+h1 {
+    text-align: center;
+    font-style: oblique;
+    color: pink;
+    Font-family: Abel;
+  
+}
+   
+  
+input {
+    border: none;
+    width: 100%;
+
+}
+.d-flex {
+    width: 800px;
+    height: 40px;
+}
+.fa-regular {
+    float: right;
+   
+
+   
+    
+}
+.task {
+    margin-left: 480px;
+    
+}

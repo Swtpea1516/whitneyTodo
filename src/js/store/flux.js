@@ -1,45 +1,76 @@
 const getState = ({ getStore, getActions, setStore }) => {
+	const url = "https://playground.4geeks.com/apis/fake/todos/user/wheacock";
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			todos: [],
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+			
+			getTodos: async () => {
+				try {
+					console.log("Fetching todos...");
+					const response = await fetch(url);
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
+					if (!response.ok) {
+						throw new Error("Invalid response");
+					}
+
+					const todos = await response.json();
+					console.log("API response:", todos);
+					setStore({ todos });
+
+				} catch (error) {
+					console.error("There was an error:", error);
+				}
+			},
+			
+			addTodo: (newTodo) => {
+				const { todos } = getStore();
+				const updatedTodos = [...todos, newTodo];
+				console.log("Adding todo:", newTodo);
+				setStore({ todos: updatedTodos });
+			},
+
+			deleteTodo: (todoIndex) => {
+				const { todos } = getStore();
+				const updatedTodos = todos.filter((_, index) => index !== todoIndex);
+				console.log("Deleting todo at index:", todoIndex);
+				setStore({ todos: updatedTodos });
+			},
+
+		},
 	};
 };
+
+
+
+// .then((data) => setStore({ starships: data.results }))
+
+
+
+
+
+
+
+
+
+
+
+
+
+//   getVehicles: async () => {
+//   try {
+// 	let response = await fetch(apiUrl + "/vehicles");
+// 	let data = await response.json();
+// 	if (data) {
+// 	  setStore({ vehicles: data.results });
+// 	  return true;
+// 	}
+//   } catch (error) {
+// 	console.log("an error has occured", error);
+// 	return false
+//   }
+// },
 
 export default getState;
